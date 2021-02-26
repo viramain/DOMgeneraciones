@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- usa hoja de estilo bootstrap descargada-->
+    <!-- <link rel="stylesheet" href="css/bootstrap.min.css" /> -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <!-- vincular MI la hoja de estilos-->
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- Iconos para usar -->
+    <script src="https://kit.fontawesome.com/30eece498c.js" crossorigin="anonymous"></script>
+
+
+    <title>Generaciones</title>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-warning text-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">GENERACIONES</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item me-auto">
+                            <a class="nav-link active" aria-current="page" href="#nombre">Ingresar Persona</a>
+                        </li>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main class="container">
+        <section class="card my-3 border-dark">
+            <!-- formulario con forma de card -->
+            <div class="card-header bg-secondary text-light">
+                <h5>Persona</h5>
+            </div>
+            <div class="card-body">
+                <form class="bg-secondary">
+                    <div class="mb-3">
+                        <!-- la etiqueta label siempre lleva clase form-label -->
+                        <label class="form-label">Nombre y Apellido</label>
+                        <!-- la etiqueta input lleva la clase form-control -->
+                        <input type="text" class="form-control" id="nombre" placeholder="Juan Perez" onblur="campoRequerido(this)">
+                        <!-- validacion de datos se usa la clase is-valid ó ininvalid en input (pone tilde)
+                        y valid-feedback ó invalid-feedback en un div da mensaje de ok-->
+                        <div class="invalid-feedback">
+                            Debe ingresar un nombre y apellido
+                        </div>
+                        <!-- <div class="valid-feedback">
+                            Ingresaste correctamente
+                        </div> -->
+                    </div>
+
+                    <!-- Muestra DNI y sexo en 2 columnas -->
+                    <div class="row">
+                        <div class="col col-md-6 mb-3 ">
+                            <label class="form-label ">DNI</label>
+                            <input type="number" class="form-control " id="dni" placeholder="" onblur="validarNumeros(this)">
+                            <div class="invalid-feedback">
+                                Debe ingresar DNI
+                            </div>
+                        </div>
+                        <!-- Sexo como check -->
+                        <div class="col col-md-6 mb-3 ">
+                            <label class="form-label ">Sexo</label>
+                            <select class="form-select" id="sexo" onblur="validarSexo(this)">
+                                <option selected>Elija opción...</option>
+                                <option value="M">Mujer</option>
+                                <option value="H">Hombre</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Debe seleccionar M o H
+                            </div>
+                        </div>
+
+                        <!-- Muestra peso y altura en 2 columnas -->
+                        <div class="row">
+                            <div class="col col-md-6 mb-3 ">
+                                <label class="form-label ">Peso (Kg)</label>
+                                <input type="number" min="1" max="300" class="form-control " id="peso" placeholder="" onblur="validarNumeros(this)">
+                                <div class="invalid-feedback">
+                                    Debe ingresar Peso
+                                </div>
+                            </div>
+                            <div class="col col-md-6 mb-3 ">
+                                <label class="form-label ">Altura (Cm)</label>
+                                <input type="number" min="1" max="250" class="form-control " id="altura" placeholder="" onblur="validarNumeros(this)">
+                                <div class="invalid-feedback">
+                                    Debe ingresar Altura
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Muestra fecha nac y si es mayor de edad en 2 columnas -->
+                        <div class="row">
+                            <div class="col col-md-6 mb-3">
+                                <label class="form-label ">Fecha de Nacimiento</label>
+                                <input type="date" class="form-control" id="fechaNac" placeholder="21-02-2021" min="1920-01-01" max="2021-12-31" onblur="validarFecha(this)">
+                                <div class="invalid-feedback">
+                                    Debe ingresar Fecha de Nacimiento
+                                </div>
+                            </div>
+                            <div class="col col-md-6 mb-3">
+                                <label class="form-label ">Mayor de Edad</label>
+                                <input type="text" class="form-control " id="mayorEdad" disabled>
+                            </div>
+                        </div>
+
+                        <!-- Muestra generacion y rasgo caracteristico en 2 columnas -->
+                        <div class="row">
+                            <div class="col col-md-6 mb-3">
+                                <label class="form-label ">Generación</label>
+                                <input type="text" class="form-control " id="generacion" disabled>
+                            </div>
+                            <div class="col col-md-6 mb-3">
+                                <label class="form-label ">Rasgo Característico</label>
+                                <input type="text" class="form-control " id="rasgo" disabled>
+                            </div>
+                        </div>
+
+                        <!-- El boton de enviar debe estar dentro del formulario -->
+                        <div class="mt-4 text-center">
+                            <button class="btn btn-primary px-5" type="submit">Enviar</button>
+                            <button class="btn btn-primary" type="button" onclick="mostrarGeneracion()">Mostrar Generación</button>
+                            <!-- <button class="btn btn-primary" type="button" onclick="mayorEdad()">Mayor de Edad</button> -->
+                        </div>
+                </form>
+                </div>
+        </section>
+    </main>
+    <footer>
+
+    </footer>
+    <!-- <script src="js/popper.min.js"></script> -->
+    <!-- cargar en orden las librerias SIEMPRE ABAJO. estan descargadas en el proyecto -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js " integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW " crossorigin="anonymous "></script>
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>
