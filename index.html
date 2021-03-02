@@ -17,6 +17,15 @@
 
 
     <title>Generaciones</title>
+
+    <!-- Para usar emailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init("user_c7em18P7GVybck6CnN0jx");
+        })();
+    </script>
+    <!-- --------------- -->
 </head>
 
 <body>
@@ -40,10 +49,10 @@
         <section class="card my-3 border-dark">
             <!-- formulario con forma de card -->
             <div class="card-header bg-secondary text-light">
-                <h5>Persona</h5>
+                <h5>Datos de la Persona</h5>
             </div>
             <div class="card-body">
-                <form class="bg-secondary">
+                <form onsubmit="validarGeneral(event)" id="formSuscripcion">
                     <div class="mb-3">
                         <!-- la etiqueta label siempre lleva clase form-label -->
                         <label class="form-label">Nombre y Apellido</label>
@@ -58,82 +67,78 @@
                             Ingresaste correctamente
                         </div> -->
                     </div>
-
-                    <!-- Muestra DNI y sexo en 2 columnas -->
-                    <div class="row">
-                        <div class="col col-md-6 mb-3 ">
-                            <label class="form-label ">DNI</label>
-                            <input type="number" class="form-control " id="dni" placeholder="" onblur="validarNumeros(this)">
-                            <div class="invalid-feedback">
-                                Debe ingresar DNI
-                            </div>
+                    <div class="mb-3">
+                        <label class="form-label ">DNI</label>
+                        <input type="number" class="form-control" id="dni" placeholder="" onblur="validarNumeros(this)">
+                        <div class="invalid-feedback">
+                            Debe ingresar DNI
                         </div>
-                        <!-- Sexo como check -->
-                        <div class="col col-md-6 mb-3 ">
-                            <label class="form-label ">Sexo</label>
-                            <select class="form-select" id="sexo" onblur="validarSexo(this)">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label ">Sexo</label>
+                        <select class="form-select" id="sexo">
                                 <option selected>Elija opción...</option>
                                 <option value="M">Mujer</option>
                                 <option value="H">Hombre</option>
                             </select>
-                            <div class="invalid-feedback">
-                                Debe seleccionar M o H
-                            </div>
+                        <div class="invalid-feedback">
+                            Debe seleccionar M (Mujer) ó H (Hombre)
                         </div>
+                    </div>
 
-                        <!-- Muestra peso y altura en 2 columnas -->
-                        <div class="row">
-                            <div class="col col-md-6 mb-3 ">
-                                <label class="form-label ">Peso (Kg)</label>
-                                <input type="number" min="1" max="300" class="form-control " id="peso" placeholder="" onblur="validarNumeros(this)">
-                                <div class="invalid-feedback">
-                                    Debe ingresar Peso
-                                </div>
-                            </div>
-                            <div class="col col-md-6 mb-3 ">
-                                <label class="form-label ">Altura (Cm)</label>
-                                <input type="number" min="1" max="250" class="form-control " id="altura" placeholder="" onblur="validarNumeros(this)">
-                                <div class="invalid-feedback">
-                                    Debe ingresar Altura
-                                </div>
-                            </div>
+                    <div class="mb-3">
+                        <label class="form-label ">Peso (Kg)</label>
+                        <input type="number" min="1" max="300" class="form-control" id="peso" placeholder="" onblur="validarNumeros(this)">
+                        <div class="invalid-feedback">
+                            Debe ingresar Peso
                         </div>
+                    </div>
 
-                        <!-- Muestra fecha nac y si es mayor de edad en 2 columnas -->
-                        <div class="row">
-                            <div class="col col-md-6 mb-3">
-                                <label class="form-label ">Fecha de Nacimiento</label>
-                                <input type="date" class="form-control" id="fechaNac" placeholder="21-02-2021" min="1920-01-01" max="2021-12-31" onblur="validarFecha(this)">
-                                <div class="invalid-feedback">
-                                    Debe ingresar Fecha de Nacimiento
-                                </div>
-                            </div>
-                            <div class="col col-md-6 mb-3">
-                                <label class="form-label ">Mayor de Edad</label>
-                                <input type="text" class="form-control " id="mayorEdad" disabled>
-                            </div>
+                    <div class="mb-3">
+                        <label class="form-label ">Altura (Cm)</label>
+                        <input type="number" min="1" max="250" class="form-control" id="altura" placeholder="" onblur="validarNumeros(this)">
+                        <div class="invalid-feedback">
+                            Debe ingresar Altura
                         </div>
+                    </div>
 
-                        <!-- Muestra generacion y rasgo caracteristico en 2 columnas -->
-                        <div class="row">
-                            <div class="col col-md-6 mb-3">
-                                <label class="form-label ">Generación</label>
-                                <input type="text" class="form-control " id="generacion" disabled>
-                            </div>
-                            <div class="col col-md-6 mb-3">
-                                <label class="form-label ">Rasgo Característico</label>
-                                <input type="text" class="form-control " id="rasgo" disabled>
-                            </div>
-                        </div>
 
-                        <!-- El boton de enviar debe estar dentro del formulario -->
-                        <div class="mt-4 text-center">
-                            <button class="btn btn-primary px-5" type="submit">Enviar</button>
-                            <button class="btn btn-primary" type="button" onclick="mostrarGeneracion()">Mostrar Generación</button>
-                            <!-- <button class="btn btn-primary" type="button" onclick="mayorEdad()">Mayor de Edad</button> -->
+                    <!-- Muestra fecha nac y si es mayor de edad en 2 columnas -->
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6 mb-3">
+
+                            <label class="form-label ">Fecha de Nacimiento</label>
+                            <input type="date" class="form-control" id="fechaNac" placeholder="Date()" min="1930-01-01" max="Date()">
+                            <!-- <div class="invalid-feedback">
+                                Debe ingresar Fecha de Nacimiento
+                            </div> -->
                         </div>
+                        <div class="col-sm-12 col-md-6 mb-3">
+                            <label class="form-label ">Mayor de Edad</label>
+                            <input type="text" class="form-control" id="mayorEdad" disabled>
+                        </div>
+                    </div>
+
+                    <!-- Muestra generacion y rasgo caracteristico en 2 columnas -->
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6 mb-3">
+                            <label class="form-label ">Generación</label>
+                            <input type="text" class="form-control" id="generacion" disabled>
+                        </div>
+                        <div class="col-sm-12 col-md-6 mb-3">
+                            <label class="form-label ">Rasgo Característico</label>
+                            <input type="text" class="form-control" id="rasgo" disabled>
+                        </div>
+                    </div>
+
+                    <!-- El boton de enviar debe estar dentro del formulario -->
+                    <div class="mt-4 text-center">
+                        <button class="btn btn-primary my-2" type="button" onclick="mostrarGeneracion()">Mostrar Generación</button>
+                        <button class="btn btn-primary px-5 mx-3" type="submit">Enviar</button>
+                    </div>
+                    <div id="mensaje"></div>
                 </form>
-                </div>
+            </div>
         </section>
     </main>
     <footer>
